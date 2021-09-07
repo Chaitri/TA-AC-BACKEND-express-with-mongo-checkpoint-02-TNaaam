@@ -1,0 +1,297 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* padding: 0 50px; */
+  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  color: rgb(87, 86, 86);
+  box-sizing: border-box;
+  margin-bottom: 200px;
+}
+
+a {
+  color: rgb(51, 51, 51);
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ca8747;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn {
+  border: 1px solid #c06611;
+  border-radius: 5px;
+  background-color: whitesmoke;
+  color: #ca8747;
+  padding: 0.25rem 0.5rem;
+  margin-right: 1rem;
+}
+
+.btn:hover {
+  background-color: #ca8747;
+  color: whitesmoke;
+}
+
+main {
+  padding: 0 3rem;
+}
+
+/* HEADER */
+
+.header {
+  padding: 2rem 3rem 0 1rem;
+}
+
+.header img {
+  width: 40px;
+}
+
+.header a {
+  margin-left: 2rem;
+  font-size: 1.1rem;
+}
+
+/* INDEX */
+
+.link {
+  font-weight: 700;
+}
+
+/* CATEGORIES */
+
+.main-heading {
+  text-align: center;
+  /* color: #ca8747; */
+  font-family: 'Kaisei HarunoUmi', serif;
+  margin: 3rem 0;
+  /* font-weight: 400; */
+}
+
+.details {
+  max-width: 1000px;
+  margin: 0 auto;
+  border: 1px solid coral;
+}
+
+.add-btn {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.btn-create {
+  border: 2px solid #ca8747;
+  border-radius: 10px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  color: gray;
+}
+
+.show-category {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1100px;
+  margin: 3rem auto;
+}
+
+.category-item {
+  max-width: 200px;
+  padding: 2rem 1rem;
+  box-shadow: 0 2px 13px 2px rgba(0, 0, 0, 0.3);
+  margin: 2rem 0;
+}
+
+.category-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.category-item h3 {
+  text-align: center;
+}
+
+.events {
+  margin: 3rem 0;
+}
+
+/* FORM */
+
+.form {
+  border: 2px solid #ca8747;
+  border-radius: 10px;
+  padding: 2rem 3rem;
+  max-width: 500px;
+  margin: 0 auto;
+  /* background-color: rgb(247, 247, 247); */
+}
+
+.form-sort {
+  border: 1px solid #ca8747;
+}
+
+.form-sort select {
+  margin: 1rem 2rem 2rem 0;
+}
+
+.form input,
+.form textarea {
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid #c06611;
+  outline: none;
+  margin-bottom: 2rem;
+  width: 90%;
+  /* border: 1px solid red; */
+}
+
+.form input[type='checkbox'] {
+  display: inline;
+  width: 10%;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.checkbox-item {
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.form input[type='submit'] {
+  display: block;
+  width: 60%;
+  margin: 0 auto;
+  background-color: whitesmoke;
+  color: #ca8747;
+  font-weight: 700;
+}
+
+.form input[type='submit']:hover {
+  color: whitesmoke;
+  background-color: #ca8747;
+}
+
+/* EVENT DETAIL */
+
+.event-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.3);
+  padding: 2rem 3rem;
+}
+
+.event-detail img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.event-item {
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 3rem 0;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.info-item {
+  margin: 0.5rem 0;
+}
+
+.info-categories {
+  margin-top: 3rem;
+}
+
+.like-btn {
+  margin-left: 1rem;
+  border-radius: 10px;
+  padding: 0.25rem 0.5rem;
+  background-color: rgb(47, 122, 192);
+  color: whitesmoke;
+}
+
+a.like-btn:hover {
+  background-color: rgb(0, 82, 158);
+  color: whitesmoke;
+}
+
+.event-detail h2 {
+  /* padding: 0 3rem; */
+}
+
+.event-detail .form {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.event-detail .form input,
+.event-detail .form textarea {
+  margin: 0.5rem 0;
+  border-radius: 0%;
+  width: 50%;
+}
+
+.remark-item {
+  margin: 2rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid gray;
+}
+
+.remark-item p {
+  margin: 0.2rem 0;
+}
+
+.remark-item i {
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+.remark-item .like {
+  font-size: 0.7rem;
+  color: grey;
+}
+
+/* FOOTER */
+
+.footer {
+  padding: 1rem 0 1rem 2rem;
+  background-color: rgb(240, 240, 240);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  justify-content: space-around;
+
+  width: 100%;
+  height: 50px;
+}
+
+.footer i {
+  margin-left: 2rem;
+  font-size: 1rem;
+  color: gray;
+}
+
+.footer i:hover {
+  color: #ca8747;
+}
+
+/* ERROR */
+
+.error {
+  margin: 2rem 0;
+}

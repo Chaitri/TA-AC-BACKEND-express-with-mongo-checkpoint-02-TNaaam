@@ -1,0 +1,87 @@
+<%- include('partials/header') -%>
+<main>
+  <h1 class="main-heading"><%= event.title %></h1>
+  <div class="add-btn">
+    <a href="/events/<%= event.id %>/edit" class="btn-create">Edit Event</a>
+    <a href="/events/<%= event.id %>/delete" class="btn-create">Delete Event</a>
+    <a href="/events/" class="btn-create">All Events</a>
+  </div>
+  <div class="event-detail">
+    <img src="<%= event.image %>" alt="image for <%= event.title %>" />
+    <div class="event-item flex">
+      <div>
+        <p class="info-item">
+          <span class="bold">Description:</span> <%= event.summary %>
+        </p>
+        <p class="info-item">
+          <span class="bold">Host:</span> <%= event.host %>
+        </p>
+        <p class="info-categories">
+          <% event.event_category.forEach(category => { %>
+          <a href="/categories/<%= category.id %>" class="btn"
+            ><%= category.name %></a
+          >
+          <% }) %>
+        </p>
+      </div>
+      <div>
+        <p class="info-item">
+          <span class="bold">From:</span> <%=
+          event.start_date.toLocaleString('en-US', { weekday:"long",
+          month:"long", day:"numeric" , hour12: "false", hour: "numeric",
+          minute: "numeric"}) %>
+        </p>
+        <p class="info-item">
+          <span class="bold">To:</span>: <%=
+          event.end_date.toLocaleString('en-US', { weekday:"long", month:"long",
+          day:"numeric" , hour12: "false", hour: "numeric", minute: "numeric"})
+          %>
+        </p>
+        <p class="info-item">
+          <span class="bold">Location:</span> <%= event.location %>
+        </p>
+        <div>
+          <span class="info-item"
+            ><%= event.likes %> user(s) liked this event</span
+          >
+          <a href="/events/<%= event.id %>/like" class="btn">Like! 👍</a>
+        </div>
+      </div>
+    </div>
+    <div class="remarks">
+      <h2>Remarks</h2>
+      <div class="remark-form">
+        <form
+          action="/events/<%= event.id %>/remarks"
+          method="POST"
+          class="form"
+        >
+          <textarea name="content" placeholder="Enter comment"></textarea>
+          <input type="text" name="author" placeholder="Enter username" />
+          <input type="submit" value="Add Comment" class="submit-btn" />
+        </form>
+      </div>
+    </div>
+
+    <% event.remarks.forEach(remark => { %>
+    <div class="remark-item">
+      <p><%= remark.content %></p>
+      <p>- <%= remark.author %></p>
+      <p class="like"><%= remark.likes %> user(s) have liked this comment.</p>
+      <div>
+        <a href="/remarks/<%= remark.id %>/like">
+          <i class="fas fa-heart"></i>
+        </a>
+        <a href="/remarks/<%= remark.id %>/edit">
+          <i class="fas fa-edit"></i>
+        </a>
+        <a href="/remarks/<%= remark.id %>/delete">
+          <i class="fas fa-trash-alt"></i>
+        </a>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</main>
+
+<%- include('partials/footer') -%>

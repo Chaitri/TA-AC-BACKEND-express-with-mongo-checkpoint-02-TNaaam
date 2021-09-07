@@ -1,0 +1,35 @@
+<%- include('partials/header') -%>
+<main>
+  <h1 class="main-heading">Create Event Category</h1>
+  <form action="/categories" method="POST" class="form">
+    <div>
+      <label for="name">Name: </label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Travel, Music, Programming ..."
+      />
+    </div>
+    <div>
+      <label for="image">Image URL: </label>
+      <input
+        type="text"
+        name="image"
+        id="image"
+        placeholder="Enter image URL"
+      />
+    </div>
+    <div>
+      <label for="description">Description: </label>
+      <textarea
+        name="description"
+        id="description"
+        placeholder="Enter category description"
+      ></textarea>
+    </div>
+    <input type="submit" value="Add Category" class="submit-btn" />
+  </form>
+</main>
+
+<%- include('partials/footer') -%>
