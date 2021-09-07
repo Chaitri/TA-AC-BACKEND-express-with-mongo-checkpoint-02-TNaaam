@@ -202,6 +202,10 @@ main {
   margin: 3rem 0;
 }
 
+.event-desc {
+  max-width: 500px;
+}
+
 .bold {
   font-weight: 700;
 }
