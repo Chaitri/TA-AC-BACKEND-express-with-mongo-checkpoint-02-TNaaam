@@ -1,0 +1,34 @@
+<%- include('partials/header') -%>
+<main>
+  <h1 class="main-heading">All Events</h1>
+  <div class="add-btn">
+    <a href="/events/new" class="btn-create">Add Event</a>
+  </div>
+  <div>
+    <form class="form form-sort" action="/events/category" method="POST">
+      <label for="category">Select a category: </label>
+      <select name="category" id="category">
+        <option value="/">All</option>
+        <% categories.forEach(category => { %>
+        <option value="<%= category.id %>"><%= category.name %></option>
+        <% }) %>
+      </select>
+      <label for="sort">Sory By: </label>
+      <select name="sort" id="sort">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="location">Location</option>
+      </select>
+      <input type="submit" value="Search" class="submit-btn" />
+    </form>
+  </div>
+  <div class="show-category">
+    <% events.forEach( event => { %>
+    <div class="category-item">
+      <img src="<%= event.image %>" alt="category for <%= event.title %>" />
+      <a href="/events/<%= event.id %>"><h3><%= event.title %></h3></a>
+    </div>
+    <% }) %>
+  </div>
+</main>
+<%- include('partials/footer') -%>

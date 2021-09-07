@@ -1,0 +1,12 @@
+<%- include('partials/header') -%>
+<main>
+  <h1 class="main-heading">Edit Remark</h1>
+  <form action="/remarks/<%= remark.id %>" method="POST" class="form">
+    <div>
+        <textarea name="content" placeholder="Enter comment" ><%= remark.content %></textarea>
+        <input type="text" name="author" placeholder="Enter username" value="<%= remark.author %>"/>
+        <input type="submit" value="Edit Comment" class="submit-btn" />
+  </form>
+</main>
+
+<%- include('partials/footer') -%>

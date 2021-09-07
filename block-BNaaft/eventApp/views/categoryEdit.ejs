@@ -1,0 +1,38 @@
+<%- include('partials/header') -%>
+<main>
+  <h1 class="main-heading">Edit Event Category</h1>
+  <form action="/categories/<%= category.id %>/edit" method="POST" class="form">
+    <div>
+      <label for="name">Name: </label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Travel, Music, Programming ..."
+        value="<%= category.name %>"
+      />
+    </div>
+    <div>
+      <label for="image">Image URL: </label>
+      <input
+        type="text"
+        name="image"
+        id="image"
+        placeholder="Enter image URL"
+        value="<%= category.image %>"
+      />
+    </div>
+    <div>
+      <label for="description">Description: </label>
+      <textarea
+        name="description"
+        id="description"
+        value="<%= category.description %>"
+        placeholder="Enter category description"
+      ></textarea>
+    </div>
+    <input type="submit" value="Edit Category" class="submit-btn" />
+  </form>
+</main>
+
+<%- include('partials/footer') -%>
