@@ -1,0 +1,22 @@
+<%- include('partials/header') -%>
+<main>
+  <h1 class="main-heading">All Event Categories</h1>
+  <div class="add-btn">
+    <a href="/categories/new" class="btn-create">Add Category</a>
+  </div>
+
+  <div class="show-category">
+    <% categories.forEach( category => { %>
+    <div class="category-item">
+      <img
+        src="<%= category.image %>"
+        alt="category for <%= category.name %>"
+      />
+      <a href="/categories/<%= category.id %>"><h3><%= category.name %></h3></a>
+    </div>
+
+    <% }) %>
+  </div>
+</main>
+
+<%- include('partials/footer') -%>

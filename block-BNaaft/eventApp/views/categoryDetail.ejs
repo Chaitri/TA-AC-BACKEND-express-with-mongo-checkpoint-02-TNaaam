@@ -1,0 +1,41 @@
+<%- include('partials/header') -%>
+<main>
+  <h1 class="main-heading"><%= category.name %></h1>
+  <div class="add-btn">
+    <a href="/categories/" class="btn-create">Go to All Categories</a>
+  </div>
+  <section class="event-detail">
+    <img src="<%= category.image %>" alt="image for <%= category.name %>" />
+    <div class="category-info">
+      <p><%= category.description %></p>
+      <p><%= category.likes %> user(s) like this category</p>
+    </div>
+    <div class="btns">
+      <a href="/categories/<%= category.id %>/like" class="btn">Like</a>
+      <a href="/categories/<%= category.id %>/edit" class="btn">Edit</a>
+      <a href="/categories/<%= category.id %>/delete" class="btn">Delete</a>
+    </div>
+
+    <div class="events">
+      <h2>Events</h2>
+      <% if (events.length === 0) { %>
+      <h4>No Events</h4>
+      <a href="/events/new" class="btn">Create One Now!</a>
+      <% } %> <% events.forEach(event => { %>
+      <div class="event-item">
+        <a href="/events/<%= event.id %>"><h4><%= event.title %></h4></a>
+        <p><%= event.summary %></p>
+        <p><%= event.location %></p>
+        <p>
+          <%= event.start_date.toLocaleString('en-US', { weekday:"long",
+          month:"long", day:"numeric" , hour12: "false", hour: "numeric",
+          minute: "numeric"}) %>%>
+        </p>
+        <hr />
+      </div>
+      <% }) %>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') -%>
