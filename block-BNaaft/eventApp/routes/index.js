@@ -7,7 +7,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/contact', (req, res) => {
-  console.log('reached');
   res.render('contact');
 });
 

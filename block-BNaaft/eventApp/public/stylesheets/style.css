@@ -145,13 +145,15 @@ main {
 }
 
 .form input,
-.form textarea {
+.form textarea,
+.form select {
   padding: 0.5rem 1rem;
   border-radius: 1rem;
   border: 1px solid #c06611;
   outline: none;
   margin-bottom: 2rem;
   width: 90%;
+  accent-color: #ca8747;
   /* border: 1px solid red; */
 }
 
@@ -165,6 +167,20 @@ main {
 .checkbox-item {
   padding: 0;
   margin: 1rem 0;
+}
+
+.form select {
+  width: 96%;
+}
+
+.form option {
+  accent-color: #ca8747;
+}
+
+.form input[type='radio'] {
+  width: 10%;
+  margin-right: 0;
+  outline: none;
 }
 
 .form input[type='submit'] {
@@ -182,6 +198,14 @@ main {
 }
 
 /* EVENT DETAIL */
+
+.no-events {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ca8747;
+  margin-top: 4rem;
+}
 
 .event-detail {
   max-width: 800px;
@@ -266,6 +290,12 @@ a.like-btn:hover {
 .remark-item .like {
   font-size: 0.7rem;
   color: grey;
+}
+
+/* FILTER FORM */
+
+.hidden {
+  display: none;
 }
 
 /* FOOTER */
