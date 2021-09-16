@@ -45,7 +45,7 @@
         name="start_date"
         id="start_date"
         placeholder="Enter event start date"
-        value="<%= event.start_date %>"
+        value="<%= start_date %>"
       />
     </div>
     <div>
@@ -55,12 +55,25 @@
         name="end_date"
         id="end_date"
         placeholder="Enter event end date"
-        value="<%= event.end_date %>"
+        value="<%= end_date %>"
       />
     </div>
     <div>
       <p>Categories:</p>
-      <% categories.forEach(category => { %>
+
+      <% categories.forEach(category => { %> <%
+      if(event.event_category.includes(category.id)) { %>
+      <div class="checkbox-item">
+        <input
+          type="checkbox"
+          name="event_category"
+          value="<%= category.id %>"
+          id="<%= category.id %>"
+          checked="true"
+        />
+        <label for="<%= category.id %>"><%= category.name %> </label>
+      </div>
+      <% } else { %>
       <div class="checkbox-item">
         <input
           type="checkbox"
@@ -70,7 +83,7 @@
         />
         <label for="<%= category.id %>"><%= category.name %> </label>
       </div>
-      <% }) %>
+      <% } %> <% }) %>
     </div>
     <div>
       <label for="location">Location: </label>

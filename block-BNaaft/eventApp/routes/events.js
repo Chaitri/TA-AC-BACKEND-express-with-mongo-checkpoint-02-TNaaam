@@ -3,86 +3,148 @@ const router = express.Router();
 const Event = require('../models/event');
 const Category = require('../models/category');
 const Remark = require('../models/remark');
+const { DateTime } = require('luxon');
+const url = require('url');
 
 // fetch all events
 router.get('/', (req, res) => {
-  Event.find({}, (err, events) => {
-    if (err) return next(err);
-    Category.find({}, (err, categories) => {
+  let parsedUrl = url.parse(req.url, true);
+  let query = parsedUrl.query;
+  let locations;
+  // get all locations
+  Event.find({})
+    .select({ location: 1 })
+    .exec((err, locs) => {
       if (err) return next(err);
-      res.render('listEvents', { events, categories });
+      locations = new Set(locs.map((loc) => loc.location));
     });
-  });
-});
+  if (parsedUrl.path === '/') {
+    Event.find({})
+      .sort({ createdAt: -1 })
+      .exec((err, events) => {
+        if (err) return next(err);
 
-// to select category
-router.post('/category', (req, res, next) => {
-  let categoryId = req.body.category;
+        // fill default dates
+        let startDate = DateTime.now();
+        let endDate = startDate
+          .plus({ days: 7 })
+          .toFormat("yyyy-LL-dd'T'HH:mm");
+        startDate = startDate.toFormat("yyyy-LL-dd'T'HH:mm");
 
-  let sortBy = req.body.sort;
-  if (sortBy === 'newest') {
-    if (categoryId === '/') {
-      Event.find({})
-        .sort({ createdAt: -1 })
+        // fetch all categories and render page
+        Category.find({}, (err, categories) => {
+          if (err) return next(err);
+          return res.render('listEvents', {
+            events,
+            categories,
+            locations,
+            startDate,
+            endDate,
+          });
+        });
+      });
+  } else {
+    let startDateQuery = query.start_date.split('T');
+    let sdate = startDateQuery[0].split('-');
+    let stime = startDateQuery[1].split(':');
+
+    let startDt = DateTime.fromObject({
+      day: sdate[2],
+      month: sdate[1],
+      hour: stime[0],
+      minute: stime[1],
+    }).toJSDate();
+
+    let endDateQuery = query.end_date.split('T');
+    let edate = endDateQuery[0].split('-');
+    let etime = endDateQuery[1].split(':');
+
+    let endDt = DateTime.fromObject({
+      day: edate[2],
+      month: edate[1],
+      hour: etime[0],
+      minute: etime[1],
+    }).toJSDate();
+
+    // dates to pre-poluate form
+    let startDate = DateTime.now();
+    let endDate = startDate.plus({ days: 7 }).toFormat("yyyy-LL-dd'T'HH:mm");
+    startDate = startDate.toFormat("yyyy-LL-dd'T'HH:mm");
+
+    if (query.category === 'all' && query.location === 'all') {
+      Event.find({
+        start_date: { $gte: startDt, $lte: endDt },
+      })
+        .sort({ createdAt: query.order })
         .exec((err, events) => {
           if (err) return next(err);
           Category.find({}, (err, categories) => {
             if (err) return next(err);
-            return res.render('listEvents', { events, categories });
+            return res.render('listEvents', {
+              events,
+              categories,
+              locations,
+              startDate,
+              endDate,
+            });
+          });
+        });
+    } else if (query.category === 'all') {
+      Event.find({
+        location: query.location,
+        start_date: { $gte: startDt, $lte: endDt },
+      })
+        .sort({ createdAt: query.order })
+        .exec((err, events) => {
+          if (err) return next(err);
+          Category.find({}, (err, categories) => {
+            if (err) return next(err);
+            return res.render('listEvents', {
+              events,
+              categories,
+              locations,
+              startDate,
+              endDate,
+            });
+          });
+        });
+    } else if (query.location === 'all') {
+      Event.find({
+        event_category: query.category,
+        start_date: { $gte: startDt, $lte: endDt },
+      })
+        .sort({ createdAt: query.order })
+        .exec((err, events) => {
+          if (err) return next(err);
+          Category.find({}, (err, categories) => {
+            if (err) return next(err);
+            return res.render('listEvents', {
+              events,
+              categories,
+              locations,
+              startDate,
+              endDate,
+            });
           });
         });
     } else {
-      Event.find({ event_category: categoryId })
-        .sort({ createdAt: -1 })
+      Event.find({
+        event_category: query.category,
+        location: query.location,
+        start_date: { $gte: startDt, $lte: endDt },
+      })
+        .sort({ createdAt: query.order })
         .exec((err, events) => {
           if (err) return next(err);
           Category.find({}, (err, categories) => {
             if (err) return next(err);
-            res.render('listEvents', { events, categories });
-          });
-        });
-    }
-  } else if (sortBy === 'oldest') {
-    if (categoryId === '/') {
-      Event.find({})
-        .sort({ createdAt: 1 })
-        .exec((err, events) => {
-          if (err) return next(err);
-          Category.find({}, (err, categories) => {
-            if (err) return next(err);
-            return res.render('listEvents', { events, categories });
-          });
-        });
-    } else {
-      Event.find({ event_category: categoryId })
-        .sort({ createdAt: 1 })
-        .exec((err, events) => {
-          if (err) return next(err);
-          Category.find({}, (err, categories) => {
-            if (err) return next(err);
-            res.render('listEvents', { events, categories });
-          });
-        });
-    }
-  } else if (sortBy === 'location') {
-    if (categoryId === '/') {
-      Event.find({})
-        .sort({ location: 1 })
-        .exec((err, events) => {
-          if (err) return next(err);
-          Category.find({}, (err, categories) => {
-            if (err) return next(err);
-            return res.render('listEvents', { events, categories });
-          });
-        });
-    } else {
-      Event.find({ event_category: categoryId })
-        .sort({ location: 1 })
-        .exec((err, events) => {
-          if (err) return next(err);
-          Category.find({}, (err, categories) => {
-            if (err) return next(err);
-            res.render('listEvents', { events, categories });
+            return res.render('listEvents', {
+              events,
+              categories,
+              locations,
+              startDate,
+              endDate,
+            });
           });
         });
     }
@@ -100,16 +162,15 @@ router.get('/new', (req, res, next) => {
 router.post('/', (req, res, next) => {
   Event.create(req.body, (err, event) => {
     if (err) return next(err);
-    event.event_category.forEach((categoryId) => {
-      Category.findByIdAndUpdate(
-        categoryId,
-        { $push: { eventId: event.id } },
-        (err, category) => {
-          if (err) return next(err);
-          res.redirect('/events');
-        }
-      );
-    });
+
+    Category.updateMany(
+      { id: { $in: event.event_category } },
+      { $push: { eventId: event.id } },
+      (err, category) => {
+        if (err) return next(err);
+        res.redirect('/events');
+      }
+    );
   });
 });
 
@@ -122,7 +183,18 @@ router.get('/:id', (req, res, next) => {
     .populate('remarks')
     .exec((err, event) => {
       if (err) return next(err);
-      res.render('eventDetail', { event });
+
+      let newFormat = { ...DateTime.DATETIME_FULL, weekday: 'long' };
+
+      let startDate = DateTime.fromJSDate(event.start_date).toLocaleString(
+        newFormat
+      );
+
+      let endDate = DateTime.fromJSDate(event.end_date).toLocaleString(
+        newFormat
+      );
+
+      res.render('eventDetail', { event, startDate, endDate });
     });
 });
 
@@ -146,9 +218,16 @@ router.get('/:id/edit', (req, res, next) => {
 
   Event.findById(id, (err, event) => {
     if (err) return next(err);
+    let start_date = DateTime.fromJSDate(event.start_date).toFormat(
+      "yyyy-LL-dd'T'HH:mm"
+    );
+    let end_date = DateTime.fromJSDate(event.end_date).toFormat(
+      "yyyy-LL-dd'T'HH:mm"
+    );
+
     Category.find({}, (err, categories) => {
       if (err) return next(err);
-      res.render('eventEdit', { event, categories });
+      res.render('eventEdit', { event, categories, start_date, end_date });
     });
   });
 });

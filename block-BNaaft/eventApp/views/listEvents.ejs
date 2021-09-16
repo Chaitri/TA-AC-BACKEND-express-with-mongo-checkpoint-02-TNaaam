@@ -3,26 +3,71 @@
   <h1 class="main-heading">All Events</h1>
   <div class="add-btn">
     <a href="/events/new" class="btn-create">Add Event</a>
+    <a href="#" id="filter" class="btn-create">Filter Events</a>
   </div>
-  <div>
-    <form class="form form-sort" action="/events/category" method="POST">
-      <label for="category">Select a category: </label>
-      <select name="category" id="category">
-        <option value="/">All</option>
-        <% categories.forEach(category => { %>
-        <option value="<%= category.id %>"><%= category.name %></option>
-        <% }) %>
-      </select>
-      <label for="sort">Sory By: </label>
-      <select name="sort" id="sort">
-        <option value="newest">Newest</option>
-        <option value="oldest">Oldest</option>
-        <option value="location">Location</option>
-      </select>
-      <input type="submit" value="Search" class="submit-btn" />
-    </form>
+  <div class="hidden" id="filterForm">
+    <div>
+      <form class="form form-sort" >
+        <div>
+          <label for="category">Category: </label>
+          <select name="category" id="category">
+            <option value="all">All</option>
+            <% categories.forEach(category => { %>
+              <option value="<%= category.id %>"><%= category.name %></option>
+            <% }) %>
+          </select>
+          
+        </div>
+        
+        <div>
+          <label for="start_date">Start Date: </label>
+          <input
+            type="datetime-local"
+            name="start_date"
+            id="start_date"
+            placeholder="Enter event start date"
+            value="<%= startDate %>"
+          />
+        </div>
+        <div>
+          <label for="end_date">End Date: </label>
+          <input
+            type="datetime-local"
+            name="end_date"
+            id="end_date"
+            placeholder="Enter event end date"
+            value="<%= endDate %>"
+          />
+        </div>
+        <div>
+          <label for="location">Location: </label>
+          <select name="location" id="location">
+            <option value="all">All</option>
+            <% locations.forEach(location => { %>
+              <option value="<%= location %>"><%= location %></option>
+            <% }) %>
+          </select>
+          
+        </div>
+        <div>
+          <p>Sort By:</p>
+         <input type="radio" name="order" id="newest" value="-1" checked>
+         <label for="newest">Newest</label>
+
+         <input type="radio" name="order" id="oldest" value="1">
+         <label for="oldest">Oldest</label>
+        </div>
+        <input type="submit">
+      </form>
+      
+    </div>
   </div>
+  </form>
+  <% if(events.length === 0) { %>
+    <p class="no-events">No Events Found</p>
+  <% } %>
   <div class="show-category">
+    
     <% events.forEach( event => { %>
     <div class="category-item">
       <img src="<%= event.image %>" alt="category for <%= event.title %>" />
@@ -31,4 +76,5 @@
     <% }) %>
   </div>
 </main>
+<script src="javascripts/script.js"></script>
 <%- include('partials/footer') -%>

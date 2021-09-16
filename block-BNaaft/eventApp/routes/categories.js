@@ -5,7 +5,6 @@ const Event = require('../models/event');
 
 // fetch all categories
 router.get('/', (req, res, next) => {
-  console.log('reached');
   Category.find({}, (err, categories) => {
     if (err) return next(err);
     res.render('listCategories', { categories });

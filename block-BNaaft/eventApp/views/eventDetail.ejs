@@ -4,7 +4,7 @@
   <div class="add-btn">
     <a href="/events/<%= event.id %>/edit" class="btn-create">Edit Event</a>
     <a href="/events/<%= event.id %>/delete" class="btn-create">Delete Event</a>
-    <a href="/events/" class="btn-create">All Events</a>
+    <!-- <a href="/events/" class="btn-create">All Events</a> -->
   </div>
   <div class="event-detail">
     <img src="<%= event.image %>" alt="image for <%= event.title %>" />
@@ -26,17 +26,9 @@
       </div>
       <div>
         <p class="info-item">
-          <span class="bold">From:</span> <%=
-          event.start_date.toLocaleString('en-US', { weekday:"long",
-          month:"long", day:"numeric" , hour12: "false", hour: "numeric",
-          minute: "numeric"}) %>
+          <span class="bold">From:</span> <%= startDate %>
         </p>
-        <p class="info-item">
-          <span class="bold">To:</span>: <%=
-          event.end_date.toLocaleString('en-US', { weekday:"long", month:"long",
-          day:"numeric" , hour12: "false", hour: "numeric", minute: "numeric"})
-          %>
-        </p>
+        <p class="info-item"><span class="bold">To:</span> <%= endDate %></p>
         <p class="info-item">
           <span class="bold">Location:</span> <%= event.location %>
         </p>
